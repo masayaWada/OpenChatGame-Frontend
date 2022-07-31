@@ -1,2 +1,7 @@
-public/conf/
-public/images/
+public/conf/*
+
+public/images/*
+
+node_modules/*
+
+package-lock.json
