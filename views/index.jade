@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  div(class="container")
+    //headerを読み込む
+    include include/header.jade
+
+    h4 ゲーム一覧
+    p 遊びたいゲームを選んでください。
+    include include/collection.jade

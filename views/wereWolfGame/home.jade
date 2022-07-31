@@ -1,0 +1,61 @@
+extends layout
+
+block content
+  div(class="container")
+
+    -var myInfoHoge = myInfo.myInfo
+    -var memberListHoge = memberList
+    -var latestPhaseHoge = latestPhase
+    // 情報表示ラベル
+    h4
+      font(color="black") 現在:
+      font(color="red") #{latestPhaseHoge.day}
+      font(color="black") 日目
+      if latestPhaseHoge.status === '昼'
+        i(class="bi bi-sun-fill" style="font-size: 1.5rem; color: orange;")
+      else
+        i(class="bi bi-moon-fill" style="font-size: 1.5rem; color: yellow;")
+
+    h4
+      font(color="black") あなたの役職は
+      font(color="red") #{myInfoHoge.job_name}
+      font(color="black") です
+
+    hr(style="border-top:1px dashed #bbb")
+
+    h3 メンバー
+    table(class="table")
+      thead
+        tr
+          th(scope="col") #
+          th(scope="col") 名前
+          th(scope="col") 状態
+          th(scope="col") 役職効果
+      tdody
+        each member in memberListHoge
+          tr
+            th(scope="row") #{member.id}
+            td #{member.name}
+            if member.died === 0
+              td
+                img(src="/images/heartbeat.svg" alt="Bootstrap" width="18" height="18")
+            else
+              td
+                img(src="/images/skull.svg" alt="Bootstrap" width="18" height="18")
+            
+            if myInfoHoge.job_name === '管理者'
+              // 管理者は役職も表示。
+              td #{member.job_name}
+            else
+              // 役職効果によって、役職が分かる機能。(狂信者なら人狼が分かる)
+              td
+                if 1 === member.job_id || 3 === member.job_id
+                  img(src="/images/job-wolf.svg" alt="Bootstrap" width="18" height="18")
+                else if 7 === member.job_id
+                  img(src="/images/job-handshake.svg" alt="Bootstrap" width="18" height="18")
+                else if 11 === member.job_id
+                  img(src="/images/job-fox.svg" alt="Bootstrap" width="18" height="18")
+    //管理者の場合表示
+    if myInfoHoge.job_name === '管理者'
+      button(class="w-100 btn btn-lg btn-primary" type="button" onclick="location.href='/wereWolfGame/standby/0/1432'") ゲーム準備
+      p ※役職ごとの人数の変更、メンバー追加削除はDBを直接書き換える(アプデするから許して🙇)

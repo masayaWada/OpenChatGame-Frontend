@@ -1,0 +1,52 @@
+extends layout
+
+block content
+  div(class="container")
+
+    -var myInfoHoge = myInfo
+    -var memberListHoge = memberList
+    -var messageHoge = message
+    -var selectedUserHoge = selectedUser
+    p #{messageHoge}
+    if [1, 4, 5, 8, 9].includes(myInfo.myInfo.job_id) && myInfo.myInfo.died === 0
+      if selectedUserHoge.selectedName !== null
+        p 
+          font(color="black") 現在選択されているのは
+          font(color="red") #{selectedUserHoge.selectedName}
+          font(color="black") さんです。
+      div(class="form-floating")
+        div(class="input-group mb-2")
+          select(class="form-select" id="tarId" aria-label="Default select example")
+            option(value="0" selected) ユーザーを選択してください。
+              each member in memberListHoge
+                option(value=member.id) #{member.name}
+          script function unionStr1(r, x, y, z){return r + "/" + x + "/" + y + "/" + z;}
+          button(class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="location.href=unionStr1('/wereWolfGame/job'," + userInfoHoge.id + "," + userInfoHoge.password + ",document.getElementById('tarId').value)")
+            i(class="bi bi-send" style="font-size: 1rem; color: Secondary;")
+          script function unionStr2(x, y, z){return x + "/" + y + "/" + z;}
+          button(class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="location.href=unionStr2('/wereWolfGame/job'," + userInfoHoge.id + "," + userInfoHoge.password + ")")
+            i(class="bi bi-arrow-clockwise" style="font-size: 1rem; color: Secondary;")
+    
+    else if [1, 4, 5, 8, 9].includes(myInfo.myInfo.job_id) && myInfo.myInfo.died === 1
+      p
+        font(color="red") ※死んでしまったプレイヤーは役職を実行できません。
+
+    if typeof selectedUserHoge.resultList !== "undefined"
+      //占い、霊媒の結果を表示
+      table(class="table")
+        thead
+          tr
+            th(scope="col") 日数
+            th(scope="col") 名前
+            th(scope="col")
+        tdody
+          each result in selectedUserHoge.resultList
+            tr
+              td #{result.day}日目
+              td #{result.name}
+              if result.disp === '人'
+                td
+                  img(src="/images/job-human.svg" alt="Bootstrap" width="18" height="18")
+              else
+                td
+                  img(src="/images/job-wolf.svg" alt="Bootstrap" width="18" height="18")

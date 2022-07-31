@@ -1,0 +1,40 @@
+extends layout
+
+block content
+  div(class="container")
+
+    -var memberListHoge = memberList
+    -var clipboardHoge = clipboard
+    // 情報表示ラベル
+    h3 メンバー
+      // クリップボードにコピー
+      script function copyToClipboard(b){const a=document.createElement('pre');a.style.webkitUserSelect='auto',a.style.userSelect='auto',a.textContent=b,document.body.appendChild(a),document.getSelection().selectAllChildren(a);const c=document.execCommand('copy');return document.body.removeChild(a),c}window.addEventListener('DOMContentLoaded',()=>{document.getElementById('copy').addEventListener('click',()=>{copyToClipboard("#{clipboardHoge}")})})
+      script window.addEventListener('DOMContentLoaded', () => {document.getElementById('copy').addEventListener('click', () => {copyToClipboard("#{clipboardHoge}");});});
+      button(type="button" class="btn btn-light btn-sm" id="copy")
+        i(class="bi bi-clipboard" style="font-size: 1rem; color: gray;")
+    table(class="table")
+      thead
+        tr
+          th(scope="col") 名前
+          th(scope="col") 順番
+          th(scope="col")
+            i(class="bi bi-trash" style="font-size: 1.2rem; color: lightgray;")
+      tdody
+        each member in memberListHoge
+          tr
+            td #{member.name}
+            td #{member.sequential}
+            td
+              a(href="/countGame/home/delete/"+member.id class="btn btn-secondary btn-sm" role="button")
+                i(class="bi bi-x-lg" style="font-size: 0.5rem; color: white;")
+    
+    //ユーザー追加
+    h3 ユーザー追加
+    div(class="input-group mb-2")
+      input(id="name" type="text" class="form-control" placeholder="追加したいプレイヤー名を記載してください。" aria-describedby="button-addon2")
+      script function unionStr1(x, y){return x + "/" + y;}
+      button(class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="location.href=unionStr1('/countGame/home/add',document.getElementById('name').value)")
+        i(class="bi bi-send" style="font-size: 1rem; color: Secondary;")
+        
+    button(class="w-100 btn btn-lg btn-primary" type="button" onclick="location.href='/countGame/standby'") ゲーム準備
+    p ※順番をランダムで設定します。

@@ -1,0 +1,33 @@
+extends layout
+
+block content
+  div(class="container")
+
+    -var myInfoHoge = myInfo
+    -var chatListHoge = chatList
+    if myInfo.myInfo.job_id === 1 && myInfo.myInfo.died === 0
+      each chat in chatListHoge
+        if chat.user_id !==  userInfoHoge.id
+          h6 #{chat.user_name}
+          div(class="d-flex flex-row bd-highlight mb-2 pb-1")
+            button(type="button" class="btn btn-primary" aria-disabled="true") #{chat.content}
+            div(style="position:relative")
+              p(style="position:absolute; bottom:0; margin:0;") #{chat.insert_date}
+        else
+          div(class="d-flex flex-row-reverse bd-highlight pb-3" style="position:relative")
+            button(type="button" class="btn btn-secondary" aria-disabled="true") #{chat.content}
+            div(class="d-flex align-items-end") #{chat.insert_date}
+    
+      div(class="form-floating")
+        div(class="input-group mb-3")
+          input(id="content" type="text" class="form-control" placeholder="送信したい内容を記載してください。" aria-describedby="button-addon2")
+          script function unionStr1(r, x, y, z){return r + "/" + x + "/" + y + "/" + z;}
+          button(class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="location.href=unionStr1('/wereWolfGame/chat'," + userInfoHoge.id + "," + userInfoHoge.password + ",document.getElementById('content').value)")
+            i(class="bi bi-send" style="font-size: 1rem; color: Secondary;")
+          script function unionStr2(x, y, z){return x + "/" + y + "/" + z;}
+          button(class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="location.href=unionStr2('/wereWolfGame/chat'," + userInfoHoge.id + "," + userInfoHoge.password + ")")
+            i(class="bi bi-arrow-clockwise" style="font-size: 1rem; color: Secondary;")
+    else
+      h6 こちらは人狼同士の作戦会議に使用されます。
+      h6 ※死んでしまった人狼、人狼以外の役職の方は使用できません。
+      h6 ※死んでしまったプレイヤーはノートの方で会話を行ってください。

@@ -1,0 +1,5 @@
+div(hidden id=('userInfo'))
+  if(userInfo !== undefined)
+    -var userInfoHoge = userInfo
+    p(id="userInfo_id") #{userInfoHoge.id}
+    p(id="userInfo_password") #{userInfoHoge.password}

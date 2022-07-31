@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  div(class="container")
+
+    -var myInfoHoge = myInfo
+    -var newsListHoge = newsList
+    div(class="form-floating")
+      - for (var i = 0; i < newsListHoge.length; ++i) {
+        // 0日目の文言表示
+        if i === 0
+          h3 #{newsListHoge[i].day}日目
+        else
+          if newsListHoge[i - 1].day !== newsListHoge[i].day
+            h3 #{newsListHoge[i].day}日目
+        ul(class="list-group list-group-flush")
+          li(class="list-group-item")
+            div(class="input-group mb-2")
+              if newsListHoge[i].type_name === '進行通知'
+                img(src="/images/info.svg" alt="Bootstrap" width="18" height="18" style="margin-right:0.5em")
+              else
+                img(src="/images/skull.svg" alt="Bootstrap" width="18" height="18" style="margin-right:0.5em")
+              h6 #{newsListHoge[i].content}
+      - }

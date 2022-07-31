@@ -1,0 +1,36 @@
+extends layout
+
+block content
+  div(class="container")
+    div
+      a(href="/wereWolfGame/jobList/" + userInfoHoge.id + "/" + userInfoHoge.password + "/" class="btn btn-primary") 一覧に戻る«
+      
+    hr(style="border-top:1px dashed #bbb")
+
+    -var jobInfoHoge = jobInfo
+    img(src="/images/jobIcon/" + jobInfoHoge.name + ".png" alt=jobInfoHoge.name)
+    h1 #{jobInfoHoge.name}
+
+    table(class="table")
+      tbody
+        tr
+          td(width="100") 陣営
+          td #{jobInfoHoge.encampments}
+        tr
+          td(width="100") 特徴
+          td #{jobInfoHoge.description}
+        tr
+          td(width="100") 占い結果
+          td #{jobInfoHoge.fortune_disp}
+        tr
+          td(width="100") 霊媒結果
+          td #{jobInfoHoge.spirit_disp}
+        tr
+          td(width="100") 能力
+          td #{jobInfoHoge.ability}
+        tr
+          td(width="100") 夜の行動
+          td #{jobInfoHoge.night_action}
+        tr
+          td(width="100") 人数
+          td #{jobInfoHoge.number_people}人

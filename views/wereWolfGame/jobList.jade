@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  div(class="container")
+    -var jobListHoge = jobList
+    
+    div(class="row row-cols-sm-2 row-cols-md-3 g-3")
+      each job in jobListHoge
+        div(class="col")
+          div(class="card" style="width: 10.5rem;")
+            img(src="/images/jobIcon/" + job.name + ".png" class="card-img-top" alt=job.name width="50")
+            div(class="card-body")
+              h5(class="card-title") #{job.name}
+              p(class="card-text") #{job.encampments}　#{job.number_people}人
+              a(href="/wereWolfGame/jobInfo/" + userInfoHoge.id + "/" + userInfoHoge.password + "/"+ job.id class="btn btn-primary") 詳細を確認 »

@@ -1,0 +1,72 @@
+extends layout
+
+block content
+  div(class="container")
+
+    -var latestPhaseHoge = latestPhase
+    -var memberListHoge = memberList
+    -var messageHoge = message
+
+    // メッセージ表示
+    p #{messageHoge}
+    hr(style="border-top:1px dashed #bbb")
+    // 情報表示ラベル
+    h4
+      font(color="black") 現在:
+      font(color="red") #{latestPhaseHoge.day}
+      font(color="black") 日目
+      if latestPhaseHoge.status === '昼'
+        i(class="bi bi-sun-fill" style="font-size: 1.5rem; color: orange;")
+      else
+        i(class="bi bi-moon-fill" style="font-size: 1.5rem; color: yellow;")
+
+    //選択済み一覧
+    table(class="table")
+      thead
+        tr
+          th(scope="col") 占い
+          th(scope="col") 襲撃
+          th(scope="col") 護衛
+          th(scope="col") 護衛(黒)
+          th(scope="col") 銃撃
+      tdody
+        tr
+          td #{latestPhaseHoge.fortune_name}
+          td #{latestPhaseHoge.kill_name}
+          td #{latestPhaseHoge.protect_name}
+          td #{latestPhaseHoge.dark_protect_name}
+          td #{latestPhaseHoge.shot_name}
+
+    //フェーズ進行ボタン
+    button(class="w-100 btn btn-lg btn-primary" type="button" onclick="location.href='/wereWolfGame/nextPhase/0/1432'") フェーズ進行
+
+    hr(style="border-top:1px dashed #bbb")
+
+    //処刑ボタン
+    select(class="form-select" id="executionId")
+      option(value="0" selected) 処刑対象のユーザー名を選択。
+        each member in memberListHoge
+          option(value=member.id) #{member.name}
+    script function unionStr(x, y){return x + "/" + y;}
+    button(class="w-100 btn btn-lg btn-primary" type="button" onclick="location.href=location.href=unionStr('/wereWolfGame/execution/0/1432',document.getElementById('executionId').value)") プレイヤーを処刑
+
+    hr(style="border-top:1px dashed #bbb")
+
+    //死亡通知ボタン
+    div(class="d-flex bd-highlight")
+      div(class="p-2 flex-shrink-2 bd-highlight")
+        select(class="form-select" id="deadType")
+          option(value="0" selected) 死因を選択。
+          option(value="1") 襲撃
+          option(value="2") 銃撃
+          option(value="3") 道連れ
+          option(value="4") 妖狐
+          option(value="5") 背徳者
+          option(value="6") 犠牲者は居ませんでした。
+      div(class="p-2 w-100 bd-highlight")
+        select(class="form-select" id="deadId")
+          option(value="0" selected) 死亡したユーザー名を選択。
+            each member in memberListHoge
+              option(value=member.id) #{member.name}
+    script function unionStr2(x, y, z){return x + "/" + y + "/" + z;}
+    button(class="w-100 btn btn-lg btn-primary" type="button" onclick="location.href=location.href=unionStr2('/wereWolfGame/dead/0/1432',document.getElementById('deadId').value,document.getElementById('deadType').value)") 死亡通知を送る

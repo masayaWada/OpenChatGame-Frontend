@@ -1,0 +1,22 @@
+ul(class="nav nav-pills" style="text-align:center")
+  // URL作成用javaScript
+  script function unionStr(x, y, z){return x + "/" + y + "/" + z;}
+  // アクティブタブ、タブ名配列、アイコン配列を宣言
+  -var active_Tab = activeTab
+  -var tabList = [{name:'ホーム',icon:'bi bi-house',url:'home'}]
+  
+  each tab in tabList
+    // アクティブなタブがない場合、非表示とする
+    if active_Tab !== ''
+      // アクティブなタブのアイコン色を変更する
+      if tab.name === active_Tab
+        li(class="nav-item")
+          a(href="#" class="nav-link active" aria-current="page")
+            i(class=tab.icon style="font-size: 2rem; color: white;")
+              p(style="font-size:medium; color:white;") #{tab.name}
+      else
+        li(class="nav-item")
+          -var urlStr = "/countGame/" + tab.url
+          a(href=urlStr class="nav-link")
+            i(class=tab.icon style="font-size: 2rem; color: cornflowerblue;")
+              p(style="font-size:medium; color:cornflowerblue;") #{tab.name}
